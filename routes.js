@@ -1,11 +1,14 @@
-import express from 'express'
 
-import userController from './userController.js'
+import express from 'express';
+import studentController from './studentController.js';
+import authenticateToken from './authMiddleware.js';
 
-const router=express.Router()
+const router = express.Router();
 
+// Protected route: create a new student
+router.post("/students", authenticateToken, studentController.createStudent);
 
-router.post("/signup",userController.signup)
-router.post("/login",userController.login)
+// Protected route: get all students
+router.get('/students', authenticateToken, studentController.getAllStudents);
 
-export default router
+export default router;
